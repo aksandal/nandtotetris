@@ -1,15 +1,25 @@
-CHIP Mux{
-    IN a,b,sel;
-    OUT out;
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/01/Mux16.hdl
+
+/**
+ * 16-bit multiplexor: 
+ * for i = 0..15 out[i] = a[i] if sel == 0 
+ *                        b[i] if sel == 1
+ */
+
+CHIP Mux16 {
+    IN a[16], b[16], sel;
+    OUT out[16];
 
     PARTS:
-    Not(in=a,out=notA);
-    Not(in=b,out=notB);
-    Not(in=sel,out=notSel);
-    Or(a=b,b=notSel,out=BnotSel);
-    And(a=a,b=BnotSel,out=AandBnotSel);
-    And(a=notA,b=b,out=notAandB);
-    And(a=notAandB,b=sel,out=notAandBandSel);
-    Or(a=AandBnotSel,b=notAandBandSel,out=out);
-    
+    Not16(in=a,out=notA);
+    Not16(in=b,out=notB);
+    Not16(in[0..15]=sel,out=notSel);
+    Or16(a=b,b=notSel,out=BnotSel);
+    And16(a=a,b=BnotSel,out=AandBnotSel);
+    And16(a=notA,b=b,out=notAandB);
+    And16(a=notAandB,b[0..15]=True,out=notAandBandSel);
+    Or16(a=AandBnotSel,b=notAandBandSel,out=out);
 }
