@@ -19,4 +19,49 @@ CHIP Mux8Way16 {
 
     PARTS:
     // Put your code here:
+    Not(in=sel[0],out=selNot0);
+    Not(in=sel[1],out=selNot1);
+    Not(in=sel[2],out=selNot2);
+    And3Way(a=sel[0],b=sel[1],c=sel[0],out=sel012);
+    And3Way(a=sel[0],b=sel[1],c=selNot2,out=sel01not2);
+    And3Way(a=sel[0],b=selNot1,c=sel[0],out=sel0not12);
+    And3Way(a=sel[0],b=selNot1,c=selNot2,out=sel0not1not2);
+    And3Way(a=selNot0,b=sel[1],c=sel[0],out=selnot012);
+    And3Way(a=selNot0,b=sel[1],c=selNot2,out=selnot01not2);
+    And3Way(a=selNot0,b=selNot1,c=sel[0],out=selnot0not12);
+    And3Way(a=selNot0,b=selNot1,c=selNot2,out=selnot0not1not2);
+
+
+
+    OneTo16(in=sel012,out=16sel012);
+    OneTo16(in=sel01not2,out=16sel01not2);
+    OneTo16(in=sel0not12,out=16sel0not12);
+    OneTo16(in=sel0not1not2,out=16sel0not1not2);
+    OneTo16(in=selnot012,out=16selnot012);
+    OneTo16(in=selnot01not2,out=16selnot01not2);
+    OneTo16(in=selnot0not12,out=16selnot0not12);
+    OneTo16(in=selnot0not1not2,out=16selnot0not1not2);
+
+
+    And(a=a,b=a16sel012,out=a16sel012);
+    And(a=b,b=a16sel01not2,out=b16sel01not2);
+    And(a=c,b=a16sel0not12,out=c16sel0not12);
+    And(a=d,b=a16sel0not1not2,out=d16sel0not1not2);
+    And(a=e,b=a16selnot012,out=e16selnot012);
+    And(a=f,b=a16selnot01not2,out=f16selnot01not2);
+    And(a=g,b=a16selnot0not12,out=g6selnot0not12);
+    And(a=h,b=a16selnot0not1not2,out=h16selnot0not1not2);
+    
+    
+    Or(a=a16sel012,b=b16sel01not2,out=aOrb16);
+    Or(a=c16sel0not12,b=d16sel0not1not2,out=cOrd16);
+    Or(a=e16selnot012,b=f16selnot01not2,out=eOrf16);
+    Or(a=g6selnot0not12,b=h16selnot0not1not2,out=gOrh16);
+    Or(a=aOrb16,b=cOrd16,out=aOrbOrcOrd16);
+    Or(a=eOrf16,b=gOrh16,out=eOrfOrgOrh16);
+    Or(a=aOrbOrcOrd16,b=eOrfOrgOrh16,out=out);
+
+
+
+
 }
