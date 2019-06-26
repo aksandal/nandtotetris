@@ -1,0 +1,4 @@
+CHIP OneTo16{
+    IN in;
+    OUT out[16;]
+}
